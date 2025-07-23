@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ErrorMessageComponent } from './error-message.component';
+import { By } from '@angular/platform-browser';
 
 describe('ErrorMessageComponent', () => {
   let component: ErrorMessageComponent;
@@ -22,14 +23,14 @@ describe('ErrorMessageComponent', () => {
   });
 
   it('should have the title', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector("h2[data-testid='name-container']")?.textContent).toContain('Murat');
+    const title = fixture.debugElement.query(By.css("h2[data-testid='name-container']"))
+    expect(title.nativeElement?.textContent).toContain('Murat');
   })
 
   it('should render custom error message', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
+    const messageContainer = fixture.debugElement.query(By.css("h1[data-testid = 'message-container']"))
     component.message = 'Error message';
     fixture.detectChanges();
-    expect(compiled.querySelector("h1[data-testid = 'message-container']")?.textContent).toContain('Error message')
+    expect(messageContainer?.nativeElement.textContent).toContain('Error message')
   });
 });
